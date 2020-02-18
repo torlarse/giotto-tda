@@ -4,8 +4,16 @@ project(giotto_bindings LANGUAGES CXX)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/gtda/externals/pybind11)
 set(BINDINGS_DIR "gtda/externals/bindings")
 
-find_package(Boost 1.56 REQUIRED)
-include_directories(${Boost_INCLUDE_DIR})
+# Add specific Boost path, according to accepted answer in
+# https://stackoverflow.com/questions/3808775/cmake-doesnt-find-boost
+
+SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/Program Files/boost/boost_1_72_0")
+SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/Program Files/boost/boost_1_72_0/lib")
+
+find_package(Boost)
+IF (Boost_FOUND)
+    INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
+ENDIF()
 
 find_package(OpenMP)
 
